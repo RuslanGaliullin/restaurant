@@ -1,6 +1,7 @@
 package kpo.restaurant.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 import kpo.restaurant.model.DishDTO;
 import kpo.restaurant.service.DishService;
 import kpo.restaurant.util.WebUtils;
@@ -42,8 +43,12 @@ public class DishController {
         if (bindingResult.hasErrors()) {
             return "dish/add";
         }
-        dishService.create(dishDTO);
-        redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS, WebUtils.getMessage("dish.create.success"));
+        try {
+            dishService.create(dishDTO);
+            redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS, WebUtils.getMessage("dish.create.success"));
+        } catch (ValidationException ex) {
+            redirectAttributes.addFlashAttribute(WebUtils.MSG_ERROR, ex.getMessage());
+        }
         return "redirect:/dishs";
     }
 

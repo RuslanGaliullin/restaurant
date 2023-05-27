@@ -2,7 +2,10 @@ package kpo.restaurant.rest;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+
 import java.util.List;
+
+import jakarta.validation.ValidationException;
 import kpo.restaurant.model.DishDTO;
 import kpo.restaurant.service.DishService;
 import org.springframework.http.HttpStatus;
@@ -19,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping(value = "/api/dishs", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/dishes", produces = MediaType.APPLICATION_JSON_VALUE)
 public class DishResource {
 
     private final DishService dishService;
@@ -29,7 +32,7 @@ public class DishResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<DishDTO>> getAllDishs() {
+    public ResponseEntity<List<DishDTO>> getAllDishes() {
         return ResponseEntity.ok(dishService.findAll());
     }
 
@@ -39,15 +42,18 @@ public class DishResource {
     }
 
     @PostMapping
-    @ApiResponse(responseCode = "201")
     public ResponseEntity<Integer> createDish(@RequestBody @Valid final DishDTO dishDTO) {
-        final Integer createdId = dishService.create(dishDTO);
-        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
+        try {
+            final Integer createdId = dishService.create(dishDTO);
+            return new ResponseEntity<>(createdId, HttpStatus.CREATED);
+        } catch (ValidationException ex) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateDish(@PathVariable(name = "id") final Integer id,
-            @RequestBody @Valid final DishDTO dishDTO) {
+                                           @RequestBody @Valid final DishDTO dishDTO) {
         dishService.update(id, dishDTO);
         return ResponseEntity.ok().build();
     }

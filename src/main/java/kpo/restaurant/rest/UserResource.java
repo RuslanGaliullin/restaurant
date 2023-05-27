@@ -2,7 +2,10 @@ package kpo.restaurant.rest;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+
 import java.util.List;
+
+import jakarta.validation.ValidationException;
 import kpo.restaurant.model.UserDTO;
 import kpo.restaurant.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -41,13 +44,17 @@ public class UserResource {
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Integer> createUser(@RequestBody @Valid final UserDTO userDTO) {
-        final Integer createdId = userService.create(userDTO);
-        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
+        try {
+            final Integer createdId = userService.create(userDTO);
+            return new ResponseEntity<>(createdId, HttpStatus.CREATED);
+        } catch (ValidationException ex) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateUser(@PathVariable(name = "id") final Integer id,
-            @RequestBody @Valid final UserDTO userDTO) {
+                                           @RequestBody @Valid final UserDTO userDTO) {
         userService.update(id, userDTO);
         return ResponseEntity.ok().build();
     }

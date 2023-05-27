@@ -2,20 +2,18 @@ package kpo.restaurant.rest;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+
 import java.util.List;
+
 import kpo.restaurant.model.OrderDTO;
 import kpo.restaurant.service.OrderService;
+import kpo.restaurant.util.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
@@ -35,7 +33,11 @@ public class OrderResource {
 
     @GetMapping("/{id}")
     public ResponseEntity<OrderDTO> getOrder(@PathVariable(name = "id") final Integer id) {
-        return ResponseEntity.ok(orderService.get(id));
+        try {
+            return ResponseEntity.ok(orderService.get(id));
+        } catch (NotFoundException ex) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
@@ -47,9 +49,16 @@ public class OrderResource {
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateOrder(@PathVariable(name = "id") final Integer id,
-            @RequestBody @Valid final OrderDTO orderDTO) {
+                                            @RequestBody @Valid final OrderDTO orderDTO) {
         orderService.update(id, orderDTO);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/cook")
+    @ApiResponse(responseCode = "200")
+    public ResponseEntity<Void> cook() throws InterruptedException {
+        orderService.cook();
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")

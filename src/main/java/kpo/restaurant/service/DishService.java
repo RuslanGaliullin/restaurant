@@ -8,6 +8,7 @@ import kpo.restaurant.model.DishDTO;
 import kpo.restaurant.repos.DishRepository;
 import kpo.restaurant.repos.OrderDishRepository;
 import kpo.restaurant.util.NotFoundException;
+import kpo.restaurant.util.ValidationException;
 import kpo.restaurant.util.WebUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -39,9 +40,16 @@ public class DishService {
     }
 
     public Integer create(final DishDTO dishDTO) {
+        if (dishDTO.getQuantity() < 0) {
+            throw new ValidationException("Quantity cannot be less then zero");
+        }
+        if (dishDTO.getPrice() <= 0) {
+            throw new ValidationException("Price cannot be less or equal zero");
+        }
         final Dish dish = new Dish();
         mapToEntity(dishDTO, dish);
         return dishRepository.save(dish).getId();
+
     }
 
     public void update(final Integer id, final DishDTO dishDTO) {

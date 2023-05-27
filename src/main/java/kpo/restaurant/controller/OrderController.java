@@ -70,14 +70,13 @@ public class OrderController {
     @GetMapping("/get/{id}")
     @ResponseBody
     public String get(@PathVariable final Integer id, final Model model) {
-        OrderDTO result;
         try {
-            result = orderService.get(id);
+            OrderDTO result = orderService.get(id);
+            model.addAttribute("order", result);
+            return String.format("Order %d from user %s. Status: %s", result.getId(), result.getUser(), result.getStatus());
         } catch (NotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }
-        model.addAttribute("order", result);
-        return String.format("Order %d from user %s. Status: %s", result.getId(), result.getUser(), result.getStatus());
     }
 
     @GetMapping("/cook")
