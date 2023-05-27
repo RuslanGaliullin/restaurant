@@ -4,7 +4,7 @@
 
 ## Описание API
 
-В файле [openapi.json]() находится json описание, чтобы посмотреть через https://editor-next.swagger.io. В нем присутствуют описания всех ошибок и описаний endpoint'ов
+В файле [openapi.json](https://github.com/RuslanGaliullin/restaurant/blob/main/openapi.json) находится json описание, чтобы посмотреть через https://editor-next.swagger.io. В нем присутствуют описания всех ошибок и endpoint'ов
 
 After starting the application it is accessible under `localhost:8080`.
 
