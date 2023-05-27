@@ -47,12 +47,8 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "user/add";
         }
-        try {
-            userService.create(userDTO);
-            redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS, WebUtils.getMessage("user.create.success"));
-        } catch (ValidationException exception) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
-        }
+        userService.create(userDTO);
+        redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS, WebUtils.getMessage("user.create.success"));
         return "redirect:/users";
     }
 
@@ -80,12 +76,8 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "user/edit";
         }
-        try {
-            userService.update(id, userDTO);
-            redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS, WebUtils.getMessage("user.update.success"));
-        } catch (ValidationException exception) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
-        }
+        userService.update(id, userDTO);
+        redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS, WebUtils.getMessage("user.update.success"));
         return "redirect:/users";
     }
 
@@ -100,10 +92,5 @@ public class UserController {
             redirectAttributes.addFlashAttribute(WebUtils.MSG_INFO, WebUtils.getMessage("user.delete.success"));
         }
         return "redirect:/users";
-    }
-
-    @ExceptionHandler(ValidationException.class)
-    public void handleValidationException(ValidationException ex) {
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 }

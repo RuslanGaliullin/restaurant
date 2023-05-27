@@ -1,10 +1,15 @@
 package kpo.restaurant.config;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
+
 import kpo.restaurant.model.ErrorResponse;
 import kpo.restaurant.model.FieldError;
 import kpo.restaurant.util.NotFoundException;
+import kpo.restaurant.util.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -67,4 +72,22 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<kpo.restaurant.util.ErrorResponse> handleValidationException(
+            Exception e
+    ) {
+        HttpStatus status = HttpStatus.BAD_REQUEST; // 400
+
+        // converting the stack trace to String
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        e.printStackTrace(printWriter);
+
+        return new ResponseEntity<>(
+                new kpo.restaurant.util.ErrorResponse(
+                        status,
+                        e.getMessage()),
+                status
+        );
+    }
 }

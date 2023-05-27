@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.util.Set;
+
 
 @Entity
 @Getter
@@ -31,13 +34,13 @@ public class Dish {
     private String description;
 
     @Column(nullable = false)
-    private Double price;
+    private BigDecimal price;
 
     @Column(nullable = false)
     private Integer quantity;
 
-    @OneToOne(mappedBy = "dish", fetch = FetchType.LAZY)
-    private OrderDish orderDish;
+    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL)
+    private Set<OrderDish> orderDishes;
 
     @Transient
     @Column(nullable = false)

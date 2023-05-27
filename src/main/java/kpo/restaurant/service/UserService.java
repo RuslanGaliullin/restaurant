@@ -59,6 +59,12 @@ public class UserService {
         if (!Role.ADMIN.equalsName(userDTO.getRole()) && !Role.USER.equalsName(userDTO.getRole())) {
             throw new ValidationException("Incorrect role type: admin or user");
         }
+        if (userRepository.existsByUsernameIgnoreCase(userDTO.getUsername())) {
+            throw new ValidationException("User with such name already exists");
+        }
+        if (userRepository.existsByEmailIgnoreCase(userDTO.getEmail())) {
+            throw new ValidationException("User with such email already exists");
+        }
         final User user = new User();
         mapToEntity(userDTO, user);
         return userRepository.save(user).getId();
@@ -85,7 +91,7 @@ public class UserService {
         userDTO.setId(user.getId());
         userDTO.setUsername(user.getUsername());
         userDTO.setEmail(user.getEmail());
-        userDTO.setPasswordHash(user.getPasswordHash());
+        userDTO.setPassword(user.getPasswordHash());
         userDTO.setRole(user.getRole());
         userDTO.setCreatedAt(user.getCreatedAt());
         userDTO.setUpdatedAt(user.getUpdatedAt());
@@ -95,7 +101,7 @@ public class UserService {
     private User mapToEntity(final UserDTO userDTO, final User user) {
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
-        user.setPasswordHash(userDTO.getPasswordHash());
+        user.setPasswordHash(userDTO.getPassword());
         user.setRole(userDTO.getRole());
         user.setCreatedAt(userDTO.getCreatedAt());
         user.setUpdatedAt(userDTO.getUpdatedAt());

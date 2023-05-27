@@ -1,5 +1,6 @@
 package kpo.restaurant.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import kpo.restaurant.domain.Dish;
@@ -43,8 +44,8 @@ public class DishService {
         if (dishDTO.getQuantity() < 0) {
             throw new ValidationException("Quantity cannot be less then zero");
         }
-        if (dishDTO.getPrice() <= 0) {
-            throw new ValidationException("Price cannot be less or equal zero");
+        if (dishDTO.getPrice().intValue() <= 0) {
+            throw new ValidationException("Price cannot be less or equal to zero");
         }
         final Dish dish = new Dish();
         mapToEntity(dishDTO, dish);
@@ -90,4 +91,10 @@ public class DishService {
         return null;
     }
 
+    public void update(final Integer id, final Dish dish) {
+        Dish base_dish = dishRepository.findById(id)
+                .orElseThrow(NotFoundException::new);
+        mapToEntity(mapToDTO(dish, new DishDTO()), base_dish);
+        dishRepository.save(base_dish);
+    }
 }

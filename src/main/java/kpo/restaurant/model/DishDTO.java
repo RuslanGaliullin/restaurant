@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 
 @Getter
 @Setter
@@ -19,7 +21,7 @@ public class DishDTO {
     private String description;
 
     @NotNull
-    private Double price;
+    private BigDecimal price;
 
     @NotNull
     private Integer quantity;

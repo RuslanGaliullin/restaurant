@@ -1,5 +1,6 @@
 package kpo.restaurant.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -25,10 +26,11 @@ public class UserDTO {
 
     @NotNull
     @Size(max = 255)
-    private String passwordHash;
+    private String password;
 
     @NotNull
     @Size(max = 255)
+    @Schema(type = "string", example = "user")
     private String role;
 
     private LocalDateTime createdAt;

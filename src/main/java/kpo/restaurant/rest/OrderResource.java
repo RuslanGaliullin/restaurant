@@ -27,27 +27,29 @@ public class OrderResource {
     }
 
     @GetMapping
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<List<OrderDTO>> getAllOrders() {
         return ResponseEntity.ok(orderService.findAll());
     }
 
     @GetMapping("/{id}")
+    @ApiResponse(responseCode = "404")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<OrderDTO> getOrder(@PathVariable(name = "id") final Integer id) {
-        try {
-            return ResponseEntity.ok(orderService.get(id));
-        } catch (NotFoundException ex) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(orderService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
+    @ApiResponse(responseCode = "400", description = "Incorrect input data")
     public ResponseEntity<Integer> createOrder(@RequestBody @Valid final OrderDTO orderDTO) {
         final Integer createdId = orderService.create(orderDTO);
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
+    @ApiResponse(responseCode = "404")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<Void> updateOrder(@PathVariable(name = "id") final Integer id,
                                             @RequestBody @Valid final OrderDTO orderDTO) {
         orderService.update(id, orderDTO);
@@ -55,7 +57,7 @@ public class OrderResource {
     }
 
     @GetMapping("/cook")
-    @ApiResponse(responseCode = "200")
+    @ApiResponse(responseCode = "204")
     public ResponseEntity<Void> cook() throws InterruptedException {
         orderService.cook();
         return ResponseEntity.noContent().build();

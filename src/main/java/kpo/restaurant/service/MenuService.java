@@ -32,6 +32,7 @@ public class MenuService {
         dishDTO.setId(dish.getId());
         dishDTO.setName(dish.getName());
         dishDTO.setPrice(dish.getPrice());
+        dishDTO.setQuantity(dish.getQuantity());
         dishDTO.setDescription(dish.getDescription() == null ? null : dish.getDescription());
         return dishDTO;
     }

@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ public class OrderDTO {
 
     private Integer id;
 
+    @NotNull
     private String status;
 
     private String specialRequest;
@@ -26,4 +28,5 @@ public class OrderDTO {
     @NotNull
     private Integer user;
 
+    private List<Integer> orderDishes;
 }

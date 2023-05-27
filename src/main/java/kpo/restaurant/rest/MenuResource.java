@@ -24,6 +24,7 @@ public class MenuResource {
     }
 
     @GetMapping
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<List<DishDTO>> getAvailable() {
         return ResponseEntity.ok(menuService.getAvailable().getDishes());
     }

@@ -3,22 +3,19 @@ package kpo.restaurant.rest;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
 
 import jakarta.validation.ValidationException;
 import kpo.restaurant.model.UserDTO;
 import kpo.restaurant.service.UserService;
+import kpo.restaurant.util.ErrorResponse;
+import kpo.restaurant.util.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -32,27 +29,30 @@ public class UserResource {
     }
 
     @GetMapping
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         return ResponseEntity.ok(userService.findAll());
     }
 
     @GetMapping("/{id}")
+    @ApiResponse(responseCode = "404")
+    @ApiResponse(responseCode = "200")
     public ResponseEntity<UserDTO> getUser(@PathVariable(name = "id") final Integer id) {
         return ResponseEntity.ok(userService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
+    @ApiResponse(responseCode = "400", description = "Incorrect input data")
     public ResponseEntity<Integer> createUser(@RequestBody @Valid final UserDTO userDTO) {
-        try {
-            final Integer createdId = userService.create(userDTO);
-            return new ResponseEntity<>(createdId, HttpStatus.CREATED);
-        } catch (ValidationException ex) {
-            return ResponseEntity.badRequest().build();
-        }
+        final Integer createdId = userService.create(userDTO);
+        return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
+    @ApiResponse(responseCode = "404")
+    @ApiResponse(responseCode = "200")
+    @ApiResponse(responseCode = "400", description = "Incorrect input data")
     public ResponseEntity<Void> updateUser(@PathVariable(name = "id") final Integer id,
                                            @RequestBody @Valid final UserDTO userDTO) {
         userService.update(id, userDTO);
@@ -65,5 +65,4 @@ public class UserResource {
         userService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
 }

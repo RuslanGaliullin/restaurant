@@ -2,6 +2,7 @@ package kpo.restaurant.service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import kpo.restaurant.domain.Dish;
 import kpo.restaurant.domain.Order;
@@ -70,6 +71,7 @@ public class OrderService {
         orderDTO.setCreatedAt(order.getCreatedAt());
         orderDTO.setUpdatedAt(order.getUpdatedAt());
         orderDTO.setUser(order.getUser() == null ? null : order.getUser().getId());
+        orderDTO.setOrderDishes(order.getOrderDishes() == null ? null : order.getOrderDishes().stream().map(OrderDish::getId).toList());
         return orderDTO;
     }
 
@@ -80,6 +82,10 @@ public class OrderService {
         order.setUpdatedAt(orderDTO.getUpdatedAt());
         final User user = orderDTO.getUser() == null ? null : userRepository.findById(orderDTO.getUser())
                 .orElseThrow(() -> new NotFoundException("user not found"));
+        order.setOrderDishes(orderDTO.getOrderDishes() == null ? null : orderDTO.getOrderDishes()
+                .stream()
+                .map(id -> orderDishRepository.findById(id).orElseThrow(() -> new NotFoundException("order dish cannot be found")))
+                .collect(Collectors.toSet()));
         order.setUser(user);
         return order;
     }

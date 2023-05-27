@@ -20,10 +20,7 @@ public class OrderDishDTO {
     @NotNull
     private Integer quantity;
 
-    @NotNull
     @Digits(integer = 10, fraction = 2)
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
-    @Schema(type = "string", example = "75.08")
     private BigDecimal price;
 
     @NotNull
