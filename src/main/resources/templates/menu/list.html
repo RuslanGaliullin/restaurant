@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="Menu"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex flex-wrap mb-4">
+        <h1 th:text="Menu" class="flex-grow-1"/>
+    </div>
+    <div th:if="${dishes.empty}" th:text="#{dish.menu.empty}"/>
+    <div th:if="${!dishes.empty}" class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead>
+            <tr>
+                <th th:text="#{dish.id.label}" scope="col"/>
+                <th th:text="#{dish.name.label}" scope="col"/>
+                <th th:text="#{dish.price.label}" scope="col"/>
+                <th th:text="#{dish.description.label}" scope="col"/>
+                <th><!-- --></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="dish : ${dishes}">
+                <td th:text="${dish.id}"/>
+                <td th:text="${dish.name}"/>
+                <td th:text="${dish.price}"/>
+                <td th:text="${dish.description}"/>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
