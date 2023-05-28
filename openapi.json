@@ -13,6 +13,7 @@
   "paths": {
     "/api/users/{id}": {
       "get": {
+        "summary": "get info about user by id",
         "tags": [
           "user-resource"
         ],
@@ -52,6 +53,7 @@
         }
       },
       "put": {
+        "summary": "update existing user data by id",
         "tags": [
           "user-resource"
         ],
@@ -90,6 +92,7 @@
         }
       },
       "delete": {
+        "summary": "delete user by id",
         "tags": [
           "user-resource"
         ],
@@ -114,6 +117,7 @@
     },
     "/api/sessions/{id}": {
       "get": {
+        "summary": "get session info by id",
         "tags": [
           "session-resource"
         ],
@@ -153,6 +157,7 @@
         }
       },
       "put": {
+        "summary": "update existing session data by id",
         "tags": [
           "session-resource"
         ],
@@ -191,6 +196,7 @@
         }
       },
       "delete": {
+        "summary": "delete existing session by id",
         "tags": [
           "session-resource"
         ],
@@ -215,6 +221,7 @@
     },
     "/api/orders/{id}": {
       "get": {
+        "summary": "get info about order by id",
         "tags": [
           "order-resource"
         ],
@@ -254,6 +261,7 @@
         }
       },
       "put": {
+        "summary": "update existing order data by id",
         "tags": [
           "order-resource"
         ],
@@ -289,6 +297,7 @@
         }
       },
       "delete": {
+        "summary": "delete existing order by id",
         "tags": [
           "order-resource"
         ],
@@ -313,6 +322,7 @@
     },
     "/api/orderDishes/{id}": {
       "get": {
+        "summary": "get info about existing order_dish by id",
         "tags": [
           "order-dish-resource"
         ],
@@ -352,6 +362,7 @@
         }
       },
       "put": {
+        "summary": "update existing order_dish data by id",
         "tags": [
           "order-dish-resource"
         ],
@@ -390,6 +401,7 @@
         }
       },
       "delete": {
+        "summary": "delete existing order_dish by id",
         "tags": [
           "order-dish-resource"
         ],
@@ -414,6 +426,7 @@
     },
     "/api/dishes/{id}": {
       "get": {
+        "summary": "get info about existing dish by id",
         "tags": [
           "dish-resource"
         ],
@@ -453,6 +466,7 @@
         }
       },
       "put": {
+        "summary": "update existing dish data by id",
         "tags": [
           "dish-resource"
         ],
@@ -491,6 +505,7 @@
         }
       },
       "delete": {
+        "summary": "delete existing dish by id",
         "tags": [
           "dish-resource"
         ],
@@ -515,6 +530,7 @@
     },
     "/api/users": {
       "get": {
+        "summary": "get info about existing user by id",
         "tags": [
           "user-resource"
         ],
@@ -536,6 +552,7 @@
         }
       },
       "post": {
+        "summary": "create new user",
         "tags": [
           "user-resource"
         ],
@@ -578,6 +595,7 @@
     },
     "/api/sessions": {
       "get": {
+        "summary": "get info about existing session by id",
         "tags": [
           "session-resource"
         ],
@@ -599,6 +617,7 @@
         }
       },
       "post": {
+        "summary": "create new session",
         "tags": [
           "session-resource"
         ],
@@ -641,6 +660,7 @@
     },
     "/api/orders": {
       "get": {
+        "summary": "get existing order by id",
         "tags": [
           "order-resource"
         ],
@@ -662,6 +682,7 @@
         }
       },
       "post": {
+        "summary": "create new order",
         "tags": [
           "order-resource"
         ],
@@ -704,6 +725,7 @@
     },
     "/api/orderDishes": {
       "get": {
+        "summary": "get existing order_dish by id",
         "tags": [
           "order-dish-resource"
         ],
@@ -725,6 +747,7 @@
         }
       },
       "post": {
+        "summary": "create new order_dish",
         "tags": [
           "order-dish-resource"
         ],
@@ -767,6 +790,7 @@
     },
     "/api/dishes": {
       "get": {
+        "summary": "get existing order_dish by id",
         "tags": [
           "dish-resource"
         ],
@@ -788,6 +812,7 @@
         }
       },
       "post": {
+        "summary": "create new order_dish",
         "tags": [
           "dish-resource"
         ],
@@ -830,6 +855,7 @@
     },
     "/api/orders/cook": {
       "get": {
+        "summary": "request to start cooking of orders with status 'в ожидании'",
         "tags": [
           "order-resource"
         ],
@@ -843,6 +869,7 @@
     },
     "/api/menu": {
       "get": {
+        "summary": "get available dishes",
         "tags": [
           "menu-resource"
         ],
