@@ -4,29 +4,60 @@
 
 ## Описание API
 
-В файле [openapi.json](https://github.com/RuslanGaliullin/restaurant/blob/main/openapi.json) находится json описание, чтобы посмотреть через https://editor-next.swagger.io. В нем присутствуют описания всех ошибок и endpoint'ов
+В файле [openapi.json](https://github.com/RuslanGaliullin/restaurant/blob/main/openapi.json) находится json описание всех возможных ошибок и endpoint'ов, чтобы посмотреть через https://editor-next.swagger.io
 
-After starting the application it is accessible under `localhost:8080`.
+## Подготовка
 
-## Build
+Необходимые условия: postgres с возможностью CRUD к базе restaurant и пустая база данных restaurant.
 
-The application can be built using the following command:
+## Выполненные части из ТЗ
 
-```
-mvnw clean package
-```
+```ValidationException.java``` - ошибка некорректных входных данных
 
-The application can then be started with the following command - here with the profile `production`:
+### Регистрация пользователей с проверкой корректности входных данных
 
-```
-java -Dspring.profiles.active=production -jar ./target/restaurant-0.0.1-SNAPSHOT.jar
-```
+- Обработка запросов в ```rest/UserResource.java```
+- Возможные роли: *user*, *admin*
+- Минимальная инфа: username, email, password, role
+- Сохранение пользователей в бд и проверка входных данных ```service/UserService.java```, ```repos/UserRepository.java```
+- Подтверждающее сообщение после успешной регистрации в rest реализовано как возврат id созданного пользователя и кода 201, в контроллерах - через сообщение во фронте 
+- Коды: 201 - создан, 400 - некорректные данные (есть описание в чем некорректность через сервис)
 
-## Further readings
+### Создание заказов
 
-* [Maven docs](https://maven.apache.org/guides/index.html)  
-* [Spring Boot reference](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)  
-* [Spring Data JPA reference](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/)  
-* [Thymeleaf docs](https://www.thymeleaf.org/documentation.html)  
-* [Bootstrap docs](https://getbootstrap.com/docs/5.2/getting-started/introduction/)  
-* [Htmx in a nutshell](https://htmx.org/docs/)  
+- Обработка запросов в ```rest/OrderResource.java```
+- Минимальная инфа: user
+- Сохранение заказов в бд и проверка входных данных ```service/OrderService.java```, ```repos/OrderRepository.java```
+- Подтверждающее сообщение после успешного создания в rest реализовано как возврат id созданного заказа и кода 201, в контроллерах - через сообщение во фронте
+- Коды: 201 - создан, 400 - некорректные данные (есть описание в чем некорректность через сервис)
+
+### Обработка заказов
+
+- Обработка запроса ```api/orders/cook``` в ```rest/OrderResource.java```
+- По запросу забираются все заказы в статусе *в ожидании* ставят на *в работе* на 6с и меняются на *завершен*
+- Работа с бд ```service/OrderService.java```, ```repos/OrderRepository.java```
+- Подтверждающее сообщение после успешного создания в rest реализовано как возврат кода 204, в контроллерах - через сообщение во фронте
+- Коды: 204
+
+### Предоставление информации о заказе
+
+- Get-запрос для получения информации о заказе ```/api/orders/{id}```
+- - Коды: 200 - OK, 404 - не найден заказ
+
+### Управление блюдами
+
+- Put-запрос для обновление данных о заказе ```/api/dishes/{id}``` в ```rest/DishResource.java```
+- Сохранение заказов в бд и проверка входных данных ```service/DishService.java```, ```repos/DishRepository.java```
+- Подтверждающее сообщение после успешного создания в rest реализовано как возврат id созданного заказа и кода 201, в контроллерах - через сообщение во фронте
+- Коды: 201 - создан, 400 - некорректные данные (есть описание в чем некорректность через сервис), 404 - не найден заказ
+
+### Предоставление меню
+
+- Get-запрос для получния меню ```/api/menu``` в ```rest/MenuResource.java```
+- Получения доступных блюд ```service/MenuService.java```, ```repos/MenuRepository.java```
+- Коды: 200 - OK
+
+### Схема БД
+![](https://github.com/RuslanGaliullin/restaurant/blob/main/data/database.png)
+
+При удалении блюда все order_dish и order, содержащие это блюда - удаляются каскадно. При пользователя - удаляются все его заказы каскадно. При удалении order_dish, он удаляется в order, который его содержит.
