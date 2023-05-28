@@ -293,6 +293,9 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "400": {
+            "description": "Incorrect input data"
           }
         }
       },

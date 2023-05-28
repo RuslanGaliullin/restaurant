@@ -50,6 +50,7 @@ public class OrderResource {
     @PutMapping("/{id}")
     @ApiResponse(responseCode = "404")
     @ApiResponse(responseCode = "200")
+    @ApiResponse(responseCode = "400", description = "Incorrect input data")
     public ResponseEntity<Void> updateOrder(@PathVariable(name = "id") final Integer id,
                                             @RequestBody @Valid final OrderDTO orderDTO) {
         orderService.update(id, orderDTO);
