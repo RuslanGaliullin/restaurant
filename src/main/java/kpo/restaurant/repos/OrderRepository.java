@@ -12,6 +12,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     Order findFirstByUser(User user);
 
+    // Обновление статуса
     @Modifying
     @Query("update Order u set u.status = :status where u.id = :id")
     void updateStatus(@Param(value = "id") Integer id, @Param(value = "status") String status);

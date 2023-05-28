@@ -16,7 +16,6 @@ public class OrderDTO {
 
     private Integer id;
 
-    @NotNull
     private String status;
 
     private String specialRequest;

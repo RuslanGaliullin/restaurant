@@ -72,13 +72,13 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    // Обработка ошибки неправильного ввода
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<kpo.restaurant.util.ErrorResponse> handleValidationException(
             Exception e
     ) {
         HttpStatus status = HttpStatus.BAD_REQUEST; // 400
 
-        // converting the stack trace to String
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         e.printStackTrace(printWriter);

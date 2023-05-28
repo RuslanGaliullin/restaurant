@@ -16,14 +16,14 @@ public class Dish {
     @Id
     @Column(nullable = false, updatable = false)
     @SequenceGenerator(
-            name = "primary_sequence",
-            sequenceName = "primary_sequence",
+            name = "primary_dish_sequence",
+            sequenceName = "primary_dish_sequence",
             allocationSize = 1,
             initialValue = 0
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "primary_sequence"
+            generator = "primary_dish_sequence"
     )
     private Integer id;
 
