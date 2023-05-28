@@ -4,7 +4,7 @@ public enum Role {
     ADMIN("admin"), USER("user");
     private final String name;
 
-    private Role(String s) {
+    Role(String s) {
         name = s;
     }
 

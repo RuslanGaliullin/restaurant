@@ -10,8 +10,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     boolean existsByEmailIgnoreCase(String email);
 
-    User findByUsername(String username);
+    // --Commented out by Inspection (28.05.2023, 11:51):User findByUsername(String username);
 
-    boolean existsByUsername(String username);
+    // --Commented out by Inspection (28.05.2023, 11:51):boolean existsByUsername(String username);
 
 }

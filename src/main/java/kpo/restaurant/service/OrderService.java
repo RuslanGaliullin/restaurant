@@ -4,11 +4,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import kpo.restaurant.domain.Dish;
 import kpo.restaurant.domain.Order;
 import kpo.restaurant.domain.OrderDish;
 import kpo.restaurant.domain.User;
-import kpo.restaurant.model.DishDTO;
 import kpo.restaurant.model.OrderDTO;
 import kpo.restaurant.repos.OrderDishRepository;
 import kpo.restaurant.repos.OrderRepository;

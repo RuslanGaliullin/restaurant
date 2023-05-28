@@ -3,15 +3,10 @@ package kpo.restaurant.rest;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.List;
 
-import jakarta.validation.ValidationException;
 import kpo.restaurant.model.OrderDishDTO;
 import kpo.restaurant.service.OrderDishService;
-import kpo.restaurant.util.ErrorResponse;
-import kpo.restaurant.util.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

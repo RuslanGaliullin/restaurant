@@ -1,7 +1,6 @@
 package kpo.restaurant.service;
 
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import kpo.restaurant.domain.Order;
@@ -56,7 +55,7 @@ public class UserService {
         if (!pattern.matcher(userDTO.getEmail()).matches()) {
             throw new ValidationException("Incorrect email format");
         }
-        if (!Role.ADMIN.equalsName(userDTO.getRole()) && !Role.USER.equalsName(userDTO.getRole())) {
+        if (Role.ADMIN.equalsName(userDTO.getRole()) && Role.USER.equalsName(userDTO.getRole())) {
             throw new ValidationException("Incorrect role type: admin or user");
         }
         if (userRepository.existsByUsernameIgnoreCase(userDTO.getUsername())) {
@@ -76,7 +75,7 @@ public class UserService {
         if (!pattern.matcher(userDTO.getEmail()).matches()) {
             throw new ValidationException("Incorrect email format");
         }
-        if (!Role.ADMIN.equalsName(userDTO.getRole()) && !Role.USER.equalsName(userDTO.getRole())) {
+        if (Role.ADMIN.equalsName(userDTO.getRole()) && Role.USER.equalsName(userDTO.getRole())) {
             throw new ValidationException("Incorrect role type: admin or user");
         }
         mapToEntity(userDTO, user);

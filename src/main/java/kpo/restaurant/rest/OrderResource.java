@@ -7,13 +7,10 @@ import java.util.List;
 
 import kpo.restaurant.model.OrderDTO;
 import kpo.restaurant.service.OrderService;
-import kpo.restaurant.util.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController

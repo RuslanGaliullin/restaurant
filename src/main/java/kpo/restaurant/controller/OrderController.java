@@ -1,14 +1,12 @@
 package kpo.restaurant.controller;
 
 import jakarta.validation.Valid;
-import kpo.restaurant.domain.Order;
 import kpo.restaurant.domain.User;
 import kpo.restaurant.model.OrderDTO;
 import kpo.restaurant.repos.UserRepository;
 import kpo.restaurant.service.OrderService;
 import kpo.restaurant.util.CustomCollectors;
 import kpo.restaurant.util.NotFoundException;
-import kpo.restaurant.util.ValidationException;
 import kpo.restaurant.util.WebUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;

@@ -6,7 +6,6 @@ import java.util.List;
 import kpo.restaurant.domain.Dish;
 import kpo.restaurant.domain.Order;
 import kpo.restaurant.domain.OrderDish;
-import kpo.restaurant.model.DishDTO;
 import kpo.restaurant.model.OrderDishDTO;
 import kpo.restaurant.repos.DishRepository;
 import kpo.restaurant.repos.OrderDishRepository;
